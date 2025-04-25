@@ -1,0 +1,17 @@
+Value SLOT (\S+)
+Value PID (\S+)
+Value SERIAL (\S+)
+Value STATUS (\S+)
+Value SYS_PWR (\S+)
+Value POE_PWR (\S+)
+Value WATTS (\d+)
+
+Start
+  ^\s*SW\s+PID\s+Serial#\s+Status\s+Sys Pwr\s+PoE Pwr\s+Watts -> Header
+
+Header
+  ^\s*--\s+[-\s]+ -> RecordLines
+
+RecordLines
+  ^\s*(?P<SLOT>[1-7][AB])\s+(?P<PID>\S+|Not Present)\s+(?P<SERIAL>\S+)?\s+(?P<STATUS>\S+)\s+(?P<SYS_PWR>\S+)?\s+(?P<POE_PWR>\S+)?\s+(?P<WATTS>\d+)? -> Record
+  ^\s*(?P<SLOT>[1-7][AB])\s+(?P<PID>Not Present) -> Record

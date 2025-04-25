@@ -1,0 +1,74 @@
+{% load static %}
+<html>
+    <head>
+        <title>HINCD Tools</title>
+        <link rel="stylesheet" type="text/css" href="{% static 'css/cui-standard.css' %}">
+    </head>
+    <body class="cui cui--wide">
+        <nav class="header" id="styleguideheader" role="navigation">
+            <div class="container">
+                <div class="header-panels">
+                    <div class="header-panel">
+                        <div class="header__logo">
+                            <span class="icon-cisco"></span>
+                        </div>
+                        <h1 class="header__title">
+                            <span class="h3">HINCD Tools</span>
+                        </h1>
+                    </div>
+                    <div class="header-panel header-panel--right">
+                        <a href="https://developer.cisco.com/docs/support-apis/" class="header-item text-small"
+                            target="_blank" rel="noopener noreferrer"><span class="icon-cisco qtr-padding-right"></span>
+                        DevNet <span class="icon-jump-out icon-size-12 qtr-padding-left"></span></a>
+                    </div>
+                </div>
+            </div>
+        </nav>
+        <main class="content content--alt">
+            <div class="row">
+                <aside id="sidebar" class="col-2 col-lg-3 col-xl-2 sidebar sidebar--tertiary dbl-margin-top dbl-padding-top" role="navigation">
+                    <ul id="rootSidebar">
+                        <li class="sidebar__item ">
+                            <a href="/" title="Home" tabindex="1">
+                            <span class="icon-home"></span>
+                            <span>Home</span>
+                            </a>
+                        </li>
+                        <li class="sidebar__item ">
+                            <a href="/eox/" title="End Of Support" tabindex="2">
+                            <span class="icon-devices"></span>
+                            <span>End Of Support</span>
+                            </a>
+                        </li>
+                        <li class="sidebar__item ">
+                            <a href="/ss/" title="Software Suggestion" tabindex="2">
+                            <span class="icon-software"></span>
+                            <span>Software Suggestion</span>
+                            </a>
+                        </li>
+                        <li class="sidebar__item ">
+                            <a href="/sni/" title="Serial Number Information" tabindex="2">
+                            <span class="icon-info"></span>
+                            <span>Serial Number Information</span>
+                            </a>
+                        </li>
+                    </ul>
+                </aside>
+                <div class="col-10 col-lg-9 col-xl-10">
+                    <div class="section">
+                        <div class="container">
+                            {% block content %}
+
+                            {% endblock %}
+                            <br> <br>
+                            <blockquote class="blockquote--blue">
+                                <p>"Ya Allah mudah2an hari ini ga ada issue, biar ngerjain report pm dengan tenang."</p>
+                                <cite>Satria Adidaya</cite>
+                            </blockquote>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </body>
+</html>

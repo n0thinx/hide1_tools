@@ -1,0 +1,15 @@
+Value Switch (\d+)
+Value Fan_Tray (FM\d+)
+Value Fan_Status (\S+)
+Value Fan_0 (\S+)
+Value Fan_1 (\S+)
+Value Fan_2 (\S+)
+Value Fan_3 (\S+)
+
+Start
+  ^Switch:\s*(?P<Switch>\d+) -> Continue
+  ^Fan\s+Fan\s+States -> FanSection
+  ^Tray\s+Status\s+0\s+1\s+2\s+3 -> FanSection
+
+FanSection
+  ^(?P<Fan_Tray>FM\d+)\s+(?P<Fan_Status>\S+)\s+(?P<Fan_0>\S+)\s+(?P<Fan_1>\S+)\s+(?P<Fan_2>\S+)\s+(?P<Fan_3>\S+) -> Record

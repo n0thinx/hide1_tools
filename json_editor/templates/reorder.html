@@ -1,0 +1,100 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="row">
+    <div class="col-lg-12 mx-auto">
+        <div class="card mb-4">
+            <div class="card-header pb-0">
+                <a class="h3 d-block mt-3 text-decoration-none text-dark">Upload JSON Files</a>
+            </div>
+            <div class="card-body form-group">
+                <form method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div class="input-group mb-3">
+                        <input type="file" name="file" multiple class="form-control" placeholder="Upload JSON Files:">
+                    </div>
+                    <div class="text-center mt-4">
+                        <button type="submit" class="btn btn-danger" id="submit" name="upload">
+                            <span class="icon-send"></span> Submit
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        {% if reorder_form %}
+        <!-- Reorder Form Card -->
+        <div class="card mb-4">
+            <div class="card-header pb-0">
+                <a class="h3 d-block mt-3 text-decoration-none text-dark">Reorder JSON Keys</a>
+            </div>
+            <div class="card-body">
+                <form method="post">
+                    {% csrf_token %}
+                    {% if json_data %}
+                    <div class="form-group mb-3">
+                        <label class="form-label">Select Key to Move</label>
+                        <select class="form-control" name="move_key">
+                            <option value="" disabled selected>Select a Key</option>
+                            {% for key in json_data.keys %}
+                            <option value="{{ key }}">{{ key }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="form-group mb-3">
+                        <label class="form-label">Select Key to Move After</label>
+                        <select class="form-control" name="after_key">
+                            <option value="" disabled selected>Select a Key</option>
+                            {% for key in json_data.keys %}
+                            <option value="{{ key }}">{{ key }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    {% endif %}
+                    <div class="text-center mt-4">
+                        <button type="submit" class="btn btn-danger" id="submit" name="reorder">
+                            <span class="icon-send"></span> Move
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        {% endif %}
+        {% if keys %}
+        <!-- Current Keys Order -->
+        <div class="card">
+            <div class="card-header pb-0">
+                <h6 class="text-uppercase text-secondary mb-0">Current Key Order</h6>
+            </div>
+            <div class="card-body">
+                <ol class="list-group list-group-numbered">
+                    {% for key in keys %}
+                    <li class="list-group-item">{{ key }}</li>
+                    {% endfor %}
+                </ol>
+                <!-- Download Button -->
+                {% if updated_json_data %}
+                <div class="text-center mt-4">
+                    <form method="post" action="{% url 'download_json' %}">
+                        {% csrf_token %}
+                        <input type="hidden" name="json_data" value="{{ updated_json_data|escapejs }}">
+                        <button type="submit" class="btn btn-danger">
+                            <span class="icon-download"></span> Download Reordered JSON
+                        </button>
+                    </form>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+        {% endif %}
+    </div>
+    <div class="mt-3 text-muted small">
+        <p><strong>How To:</strong></p>
+        <ul>
+            <li>Upload .json file from Tools PM</li>
+            <li>After that, you will be displayed current order of json dict</li>
+            <li>You can reorder the json dict using the "Reorder JSON Keys"</li>
+            <li>After you finish reorder the json, you can download the result, and then upload to Topology Drawer</li>
+        </ul>
+    </div>
+</div>
+{% endblock %}

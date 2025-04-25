@@ -1,0 +1,12 @@
+Value Sensor ([\w\s]+)
+Value Location (\d+)
+Value State (\S+)
+Value Reading (\d+)
+Value Unit (\w+)
+Value Range ([\d\-na ]+)
+
+Start
+  ^\s*Sensor\s+Location\s+State\s+Reading\s+Range.* -> Begin
+
+Begin
+  ^(?P<Sensor>[\w\s]+?)\s+(?P<Location>\d+)\s+(?P<State>\S+)\s+(?P<Reading>\d+)\s+(?P<Unit>mV|mA|mW|rpm|Celsius)\s+(?P<Range>[\d\s\-na]+)? -> Record

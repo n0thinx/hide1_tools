@@ -1,0 +1,31 @@
+Value HOSTNAME (\S+)
+Value VERSION (.+?)
+Value ROMMON (\S+)
+Value UPTIME (.+)
+Value RELOAD_REASON (.+?)
+Value RUNNING_IMAGE (\S+)
+Value List HARDWARE (\S+|\S+\d\S+)
+Value List SERIAL (\S+)
+Value RESTARTED (.+)
+
+Start
+  ^.*Software\s.+\),\sVersion\s${VERSION},*\s+RELEASE.*
+  ^ROM:\s+${ROMMON}
+  ^\s*${HOSTNAME}\s+uptime\s+is\s+${UPTIME} -> Continue
+  ^[sS]ystem\s+image\s+file\s+is\s+"(.*?):${RUNNING_IMAGE}"
+  ^(?:[lL]ast\s+reload\s+reason:|System\s+returned\s+to\s+ROM\s+by)\s+${RELOAD_REASON}\s*$$
+  ^[Pp]rocessor\s+board\s+ID\s+${SERIAL}
+  ^[Cc]isco\s+${HARDWARE}\s+\(.+\).+
+  ^System\s+restarted\s+at\s+${RESTARTED}$$
+  # Safely skip over "Switch Ports Model..." lines instead of transitioning
+  ^Switch\s+Ports\s+Model.* -> Start
+  ^-+\s+-+\s+-+.* -> Start
+  ^\*\s*\d+\s+\d+\s+\S+\s+[\d.]+\s+\S+\s+\S+ -> Start
+  # Only enter Stack state on actual stacked switch detail lines (not summary tables)
+  ^[Ss]ystem\s+[Ss]erial\s+[Nn]umber\s+: -> Stack
+  ^[Mm]odel\s+[Nn]umber\s+: -> Stack
+
+Stack
+  ^[Ss]ystem\s+[Ss]erial\s+[Nn]umber\s+:\s+${SERIAL}
+  ^[Mm]odel\s+[Nn]umber\s+:\s+${HARDWARE}
+  ^.* -> Stack

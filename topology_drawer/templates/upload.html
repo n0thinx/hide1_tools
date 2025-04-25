@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="row">
+    <div class="col-lg-12 mx-auto">
+        <div class="card mb-4">
+            <div class="card-header pb-0">
+                <a class="h3 d-block mt-3 text-decoration-none text-dark">Convert JSON Files to DRAW.IO</a>
+            </div>
+            <div class="card-body form-group">
+                <form method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div class="input-group mb-3">
+                        <input type="file" name="json_file" accept=".json" required class="form-control"
+                            placeholder="Upload JSON Files:">
+                    </div>
+                    <div class="text-center mt-4">
+                        <button type="submit" class="btn btn-danger" id="submit" name="upload">
+                            <span class="icon-send"></span> Submit
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="mt-3 text-muted small">
+        <p><strong>How To:</strong></p>
+        <ul>
+            <li>Upload .json file from Tools PM or Tools JSON</li>
+            <li>After click "Submit" button, the file "network_custom.drawio" will downloaded</li>
+            <li>Then, open <a href="https://app.diagrams.net/" target="_blank">"https://app.diagrams.net/"</a> and import the .drawio file</li>
+            <li>After that, select all object on draw.io, Select Arrange -> Layouts -> Vertical Tree</li>
+            <li>If the "Tree" didn't correct, you can use Tools JSON to reorder the json structure, and then repeat from 1st step</li>
+        </ul>
+    </div>
+</div>
+{% endblock %}

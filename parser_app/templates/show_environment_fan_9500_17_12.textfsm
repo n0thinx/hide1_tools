@@ -1,0 +1,11 @@
+Value SWITCH (\d+)
+Value FAN (\d+)
+Value SPEED (\d+)
+Value STATE (\S+)
+Value AIRFLOW (.+)
+
+Start
+  ^\s*Switch\s+FAN\s+Speed\s+State\s+Airflow direction -> Begin
+
+Begin
+  ^\s*(?P<SWITCH>\d+)\s+(?P<FAN>\d+)\s+(?P<SPEED>\d+)\s+(?P<STATE>\S+)\s+(?P<AIRFLOW>.+?)\s*$$ -> Record

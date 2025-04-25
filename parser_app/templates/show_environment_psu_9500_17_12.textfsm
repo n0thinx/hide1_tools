@@ -1,0 +1,13 @@
+Value SW (\S+)
+Value PID (\S+)
+Value SERIAL (\S+)
+Value STATUS (\S+(?:\s\S+)*)
+Value SYS_PWR (\S+)
+Value POE_PWR (\S+)
+Value WATTS (\d+)
+
+Start
+  ^\s*SW\s+PID\s+Serial#\s+Status\s+Sys Pwr\s+PoE Pwr\s+Watts -> Begin
+
+Begin
+  ^\s*(?P<SW>[1-7][A-B])\s+(?P<PID>\S+)\s+(?P<SERIAL>\S+)\s+(?P<STATUS>\S+(?:\s\S+)*)\s+(?P<SYS_PWR>\S+)\s+(?P<POE_PWR>\S+)\s+(?P<WATTS>\d+)\s*$$ -> Record

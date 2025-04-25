@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <head>
+        <title>HINCD Tools</title>
+        <link rel="stylesheet" type="text/css" href="css/cui-standard.css">
+    </head>
+</head>
+<body>
+    <div class="sidebar">
+
+        <!-- ... (your sidebar content) ... -->
+    </div>
+</body>
+</html>

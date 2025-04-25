@@ -1,0 +1,36 @@
+Value Switch (\d+)
+Value Fan (\S+\s*\S*)
+Value Fan_Status (\S+)
+Value Temperature_Type (\S+\s*\S*)
+Value Temperature_Value (\d+)
+Value Temperature_Unit (\S+)
+Value Temperature_State (\S+)
+Value Yellow_Threshold (\d+)
+Value Red_Threshold (\d+)
+Value SW (\S+)
+Value PID (\S+)
+Value Serial (\S+|Not\s+Present)
+Value Status (\S+)
+Value Sys_Pwr (\S+)
+Value PoE_Pwr (\S+)
+Value Watts (\d+|n/a)
+
+Start
+  ^\s*Switch\s+\d+\s+Environmental\s+Status -> Continue
+  ^Switch\s+${Switch}\s+FAN\s+${Fan}\s+is\s+${Fan_Status} -> Record
+  ^FAN\s+${Fan}\s+is\s+${Fan_Status} -> Record
+  ^Switch\s+${Switch}:\s+SYSTEM\s+TEMPERATURE\s+is\s+${Temperature_State} -> TempDetails
+
+TempDetails
+  ^Inlet\s+Temperature\s+Value:\s+${Temperature_Value}\s+${Temperature_Unit}
+  ^Temperature\s+State:\s+${Temperature_State} -> Record
+  ^Yellow\s+Threshold\s+:\s+${Yellow_Threshold}
+  ^Red\s+Threshold\s+:\s+${Red_Threshold}
+  ^Hotspot\s+Temperature\s+Value:\s+${Temperature_Value}\s+${Temperature_Unit}
+  ^Temperature\s+State:\s+${Temperature_State} -> Record
+  ^Yellow\s+Threshold\s+:\s+${Yellow_Threshold}
+  ^Red\s+Threshold\s+:\s+${Red_Threshold}
+  ^SW\s+PID\s+Serial#\s+Status\s+Sys\s+Pwr\s+PoE\s+Pwr\s+Watts -> PowerDetails
+
+PowerDetails
+  ^${SW}\s+${PID}\s+${Serial}\s+${Status}\s+${Sys_Pwr}\s+${PoE_Pwr}\s+${Watts} -> Record

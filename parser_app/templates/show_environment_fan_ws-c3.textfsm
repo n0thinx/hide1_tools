@@ -1,0 +1,8 @@
+Value Switch (\d+)
+Value Fan (\S+\s*\S*)
+Value Fan_Status (\S+)
+
+Start
+  ^\s*Switch\s+\d+\s+Environmental\s+Status -> Continue
+  ^Switch\s+${Switch}\s+FAN\s+${Fan}\s+is\s+${Fan_Status} -> Record
+  ^FAN\s+${Fan}\s+is\s+${Fan_Status} -> Record

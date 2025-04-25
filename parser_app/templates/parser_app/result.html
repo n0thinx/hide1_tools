@@ -1,0 +1,85 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container-fluid">
+    <a class="h2 d-block mt-2 text-decoration-none text-dark text-center">Parsed Output</a>
+    {% for file, details in parsed_data.items %}
+    {% with file_slug=file|slugify %}
+    <div class="card my-3">
+        <div class="card-header bg-danger text-white">
+            <a class="h3 d-block mt-3 text-decoration-none text-light">{{ file }}</a>
+            <p class="text-light">Model: <strong>{{ details.model }}</strong></p>
+        </div>
+        <div class="card-body">
+            {% if details.data %}
+                {% for command, output in details.data.items %}
+                {% with section_id=file_slug|add:"-"|add:command|slugify %}
+                    <div class="mb-3">
+                        <a class="h5 d-block mt-3 text-decoration-none text-dark" data-bs-toggle="collapse"
+                           href="#collapse-{{ section_id }}" role="button"
+                           aria-controls="collapse-{{ section_id }}">
+                           {{ command|upper }}
+                        </a>
+                        <div id="collapse-{{ section_id }}" class="collapse">
+                            <div class="mt-2">
+                                {% if output %}
+                                    {% if output.0 %}
+                                        <div class="table-responsive">
+                                            <table class="table table-bordered table-striped">
+                                                <thead class="table-dark">
+                                                    <tr>
+                                                        {% for key in output.0.keys %}
+                                                        <th>{{ key }}</th>
+                                                        {% endfor %}
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    {% for row in output %}
+                                                    <tr>
+                                                        {% for value in row.values %}
+                                                        <td>{{ value }}</td>
+                                                        {% endfor %}
+                                                    </tr>
+                                                    {% endfor %}
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    {% else %}
+                                        <ul>
+                                            {% for key, value in output.items %}
+                                            <li><strong>{{ key|title }}:</strong> {{ value }}</li>
+                                            {% endfor %}
+                                        </ul>
+                                    {% endif %}
+                                {% else %}
+                                    <p class="text-muted">No data found for this command.</p>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                {% endwith %}
+                {% endfor %}
+            {% else %}
+                <p class="text-danger">No data available.</p>
+            {% endif %}
+        </div>
+        
+    </div>
+    {% endwith %}
+    {% endfor %}
+</div>
+
+<div class="text-center mt-4">
+    <a href="?action=upload" class="btn btn-danger">Upload More Files</a>
+    <a href="{% url 'download_as_json' %}" class="btn btn-danger">Download JSON</a>
+</div>
+<script>
+    // Remove hash from URL after page loads
+    window.addEventListener("DOMContentLoaded", function() {
+      if (window.location.hash) {
+        history.replaceState(null, document.title, window.location.pathname + window.location.search);
+      }
+    });
+  </script>
+  
+{% endblock %}

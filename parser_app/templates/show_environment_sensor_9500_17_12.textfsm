@@ -1,0 +1,12 @@
+Value SENSOR (\S+(?:\s\S+)*)
+Value LOCATION (\d+)
+Value STATE (\S+)
+Value READING (\d+(?:\.\d+)?(?:\s\S+)?)
+Value RANGE (\S+(?:\s*-\s*\S+)?|na)
+
+Start
+  ^\s*Sensor List:.*
+  ^\s*Sensor\s+Location\s+State\s+Reading\s+Range\(min-max\) -> StartLine
+
+StartLine
+  ^\s*(?P<SENSOR>\S+(?:\s\S+)*?)\s+(?P<LOCATION>[1-7])\s+(?P<STATE>\S+)\s+(?P<READING>\d+\s\S+)\s+(?P<RANGE>[\d\s\-]+|na)\s*$$ -> Record

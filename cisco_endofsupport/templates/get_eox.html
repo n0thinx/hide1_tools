@@ -1,0 +1,99 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{% load widget_tweaks %}
+<div class="row">
+    <div class="col-lg-12 mx-auto">
+        <div class="card mb-4">
+            <div class="card-header pb-0">
+                <a class="h3 d-block mt-3 text-decoration-none text-dark">Get End Of Support Data</a>
+            </div>
+            <div class="card-body form-group">
+                <form method="post" action="{% url 'get_eox' %}">
+                    {% csrf_token %}
+                    <div class="mb-3">
+                        <label class="form-label" for="id_search_type">Search Type</label>
+                        {{ form.search_type|add_class:"form-select" }}
+            
+                        <label class="form-label mt-3" for="id_search_value">Search Value</label>
+                        {{ form.search_value|add_class:"form-control" }}
+                    </div>
+            
+                    <div class="text-center mt-4">
+                        <button type="submit" class="btn btn-danger" id="submit" name="submit">
+                            <span class="icon-send"></span> Submit
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        {% if error_message_apikey or error_message_eox_data or eox_data %}
+        <div class="card shadow border-radius-lg mt-4">
+            <div class="card-body">
+                {% if error_message_apikey %}
+                <div class="alert alert-danger text-white" role="alert">
+                    <strong>Error Getting API Key :</strong> {{ error_message_apikey }}
+                </div>
+                {% elif error_message_eox_data %}
+                <div class="alert alert-danger text-white" role="alert">
+                    <strong>Error Getting End Of Support Data ::</strong> {{ error_message_eox_data }}
+                </div>
+                {% elif eox_data.EOXRecord.0.EOXError %}
+                <div class="alert alert-danger text-white" role="alert">
+                    <strong>Error Getting End Of Support Data ::</strong> {{ eox_data.EOXRecord.0.EOXError.ErrorID }}, {{ eox_data.EOXRecord.0.EOXError.ErrorDescription }}
+                </div>
+                {% elif eox_data.EOXError %}
+                <div class="alert alert-danger text-white" role="alert">
+                    <strong>Error Getting End Of Support Data ::</strong> {{ eox_data.EOXError.ErrorID }}, {{ eox_data.EOXError.ErrorDescription }}
+                </div>
+                {% else %}
+                <h5 class="text-center mb-3">End Of Support Data</h5>
+                <div class="table-responsive">
+                    <table class="table align-items-center mb-0">
+                        <thead class="thead-light">
+                            <tr>
+                                <th>EOL Product ID</th>
+                                <th>Description</th>
+                                <th>Bulletin Link</th>
+                                <th>LDOS Date</th>
+                                <th>Replacement ID</th>
+                                <th>Replacement Info</th>
+                                <th>Replacement Link</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for record in eox_data.EOXRecord %}
+                            <tr>
+                                <td>{{ record.EOLProductID }}</td>
+                                <td>{{ record.ProductIDDescription }}</td>
+                                <td>
+                                    {% if record.LinkToProductBulletinURL %}
+                                    <a href="{{ record.LinkToProductBulletinURL }}" target="_blank">{{ record.EOLProductID }}</a>
+                                    {% else %}
+                                    N/A
+                                    {% endif %}
+                                </td>
+                                <td>{{ record.LastDateOfSupport.value }}</td>
+                                <td>{{ record.EOXMigrationDetails.MigrationProductId|default:"N/A" }}</td>
+                                <td>{{ record.EOXMigrationDetails.MigrationInformation|default:"N/A" }}</td>
+                                <td>
+                                    {% if record.EOXMigrationDetails.MigrationProductInfoURL %}
+                                    <a href="{{ record.EOXMigrationDetails.MigrationProductInfoURL }}"
+                                        target="_blank">View</a>
+                                    {% else %}
+                                    N/A
+                                    {% endif %}
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

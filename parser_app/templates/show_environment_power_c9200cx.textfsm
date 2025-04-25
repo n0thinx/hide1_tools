@@ -1,0 +1,13 @@
+Value POWER_SOURCE (\S+(?:\s+\S+)*)
+Value TYPE (\S+)
+Value POWER (\d+)
+Value MODE (\S+)
+
+Start
+  ^Power\s+Source\s+Type\s+Power\(w\)\s+Mode -> Headers
+
+Headers
+  ^-+\s+-+\s+-+\s+-+ -> Data
+
+Data
+  ^${POWER_SOURCE}\s+${TYPE}\s+${POWER}\(w\)\s+${MODE} -> Record

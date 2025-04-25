@@ -1,0 +1,150 @@
+{% load static %}
+<html>
+
+<head>
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet">
+
+    <!-- HTML in your document's head -->
+    <link rel="preconnect" href="https://rsms.me/">
+    <link rel="stylesheet" href="https://rsms.me/inter/inter.css">
+    <!-- Font Awesome Icons -->
+    <script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>
+
+    <!-- CSS Files -->
+    <link id="pagestyle" href="{% static 'css/soft-ui-dashboard.css' %}" rel="stylesheet" />
+
+    <!-- Core -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-..." crossorigin="anonymous"></script>
+    <!-- <script src="{% static 'js/core/popper.min.js' %}"></script>
+    <script src="{% static 'js/core/bootstrap.min.js' %}"></script> -->
+
+    <!-- Theme JS -->
+    <script src="{% static 'js/soft-ui-dashboard.min.js' %}"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <title>{% block title %}HIDE1 Tools{% endblock %}</title>
+</head>
+
+<body class="g-sidenav-show bg-gray-100">
+</div>
+    <aside
+        class="sidenav navbar navbar-vertical navbar-expand-xs border-0 border-radius-xl my-3 fixed-start ms-3 bg-white"
+        id="sidenav-main">
+        <div class="sidenav-header">
+            <i class="fas fa-times p-3 cursor-pointer text-secondary opacity-5 position-absolute end-0 top-0 d-none d-xl-none"
+                aria-hidden="true" id="iconSidenav"></i>
+            <a class="navbar-brand m-0">
+                <img src="{% static 'img/logo.png' %}" class="navbar-brand-img h-100" alt="main_logo">
+            </a>
+        </div>
+        <hr class="horizontal dark mt-0">
+        <div class="collapse navbar-collapse w-auto " id="sidenav-collapse-main">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link {% if request.path == '/' %}active{% endif %}" href="/">
+                        <div
+                            class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
+                        </div>
+                        <span class="nav-link-text ms-1">Dashboard</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link {% if request.path == '/tools-pm/' %}active{% endif %}" href="/tools-pm/">
+                        <div
+                            class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
+                        </div>
+                        <span class="nav-link-text ms-1">Tools PM</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link {% if request.path == '/tools-json/' %}active{% endif %}" href="/tools-json/">
+                        <div
+                            class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
+                        </div>
+                        <span class="nav-link-text ms-1">Tools JSON</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link {% if request.path == '/topology-drawer/' %}active{% endif %}" href="/topology-drawer/">
+                        <div
+                            class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
+                        </div>
+                        <span class="nav-link-text ms-1">Topology Drawer</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link {% if request.path == '/tools-cisco/end-of-support/' %}active{% endif %}" href="/tools-cisco/end-of-support/">
+                        <div
+                            class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
+                        </div>
+                        <span class="nav-link-text ms-1">End Of Support</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link {% if request.path == '/tools-cisco/serial-number-information/' %}active{% endif %}" href="/tools-cisco/serial-number-information/">
+                        <div
+                            class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
+                        </div>
+                        <span class="nav-link-text ms-1">Serial Number Information</span>
+                    </a>
+                </li>
+                {% if request.user.is_superuser %}
+                <li class="nav-item">
+                    <a class="nav-link {% if request.path == '/activity-log/' %}active{% endif %}" href="/activity-log/">
+                        <div
+                            class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
+                        </div>
+                        <span class="nav-link-text ms-1">Activity Log</span>
+                    </a>
+                </li>
+                {% endif %}
+            </ul>
+        </div>
+        <div class="sidenav-footer position-absolute bottom-0 w-100 p-3">
+            <div class="d-flex flex-column align-items-center">
+                <img src="{% static 'img/user.png' %}" alt="User Avatar" class="rounded-circle mb-2" width="50"
+                    height="50">
+                <span style="font-size: 12px" class="nav-link-text ms-1">{{ user.get_full_name|default:user.username }}</span>
+                <span style="font-size: 12px" class="nav-link-text ms-1">{{ user.email }}</span>
+                <a href="{% url 'logout' %}" class="btn btn-danger btn-outline-primary btn-sm mt-2">Logout</a>
+            </div>
+        </div>
+    </aside>
+    <main class="main-content position-relative max-height-vh-100 h-100 border-radius-lg ">
+        <nav class="navbar navbar-main navbar-expand-lg px-0 mx-4 shadow-none border-radius-xl position-sticky blur shadow-blur mt-4 left-auto top-1 z-index-sticky"
+            id="navbarBlur" navbar-scroll="true">
+            <div class="container-fluid py-1 px-3">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb bg-transparent mb-0 pb-0 pt-1 px-0 me-sm-6 me-5">
+                        {% for crumb in breadcrumbs %}
+                        {% if not forloop.last %}
+                        <li class="breadcrumb-item text-sm">
+                            <a class="opacity-5 text-dark" href="{{ crumb.url|lower }}">{{ crumb.name }}</a>
+                        </li>
+                        {% else %}
+                        <li class="breadcrumb-item text-sm text-dark active" aria-current="page">{{ crumb.name }}</li>
+                        {% endif %}
+                        {% endfor %}
+                    </ol>
+                </nav>
+            </div>
+        </nav>
+        <div class="container-fluid py-4">
+            <div class="row">
+                <div class="col-lg-12 col-12">
+                    {% block content %}
+                    {% endblock %}
+                </div>
+            </div>
+        </div>
+    </main>
+    <script src="{% static 'js/core/popper.min.js' %}"></script>
+    <script src="{% static 'js/core/bootstrap.min.js' %}"></script>
+    <script src="{% static 'js/plugins/perfect-scrollbar.min.js' %}"></script>
+    <script src="{% static 'js/plugins/smooth-scrollbar.min.js' %}"></script>
+    <script src="{% static 'js/plugins/chartjs.min.js' %}"></script>
+    </main>
+</body>
+</html>

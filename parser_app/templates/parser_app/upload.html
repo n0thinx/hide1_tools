@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="row">
+    <div class="col-lg-12 mx-auto">
+        <div class="card mb-4">
+            <div class="card-header pb-0">
+                <a class="h3 d-block mt-3 text-decoration-none text-dark">Upload JSON Files</a>
+            </div>
+            <div class="card-body form-group">
+                <form method="post" enctype="multipart/form-data" class="input-group mb-3">
+                    {% csrf_token %}
+                    <div class="input-group">
+                        <input type="file" name="files" multiple class="form-control"
+                            placeholder="Upload Configuration Files:">
+                    </div>
+                    <div class="text-center base-margin-bottom base-margin-top w-100 mt-4">
+                        <button type="submit" class="btn btn-danger" id="submit" name="submit">
+                            <span class="icon-send"></span> Submit
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="mt-3 text-muted small">
+        <p><strong>Note:</strong></p>
+        <ul>
+            <li>You can upload multiple configuration files at once.</li>
+            <li>Supported formats: plain text files (.txt, .log).</li>
+            <li>The tool will automatically detect the device model and apply the appropriate parsing templates.</li>
+            <li>Parsed results will be saved and available for download or view after submission.</li>
+        </ul>
+        <p><strong>Currently Data Output:</strong></p>
+        <ul>
+            <li>Show Version</li>
+            <li>Show Inventory</li>
+            <li>Show Interfaces</li>
+            <li>Show Environment ( different each type )</li>
+        </ul>
+        <p><strong>Currently Supported Cisco Routing & Switching Type:</strong></p>
+        <ul>
+            <li>Cisco C9200 Series</li>
+            <li>Cisco C9200L Series</li>
+            <li>Cisco C9200CX Series</li>
+            <li>Cisco C9300 Series</li>
+            <li>Cisco C9300X Series</li>
+            <li>Cisco C9500 Series</li>
+            <li>Cisco C1000 Series</li>
+            <li>Cisco C3850 Series</li>
+            <li>Other types are supported, but not all data will be generated</li>
+        </ul>
+        <p class="text-danger"><strong>Known Issue:</strong></p>
+        <ul>
+            <li class="text-danger">Don't have an proper "implicit rules"</li>
+            <li class="text-danger">If show tech-support file contains "show module" sometimes make issue in "show
+                version" output</li>
+            <li class="text-danger">Different version sometimes make issue, espescially IOS-XE 17.09 and IOS-XE 17.12
+            </li>
+        </ul>
+    </div>
+    {% if message %}
+    <p style="color: green;">{{ message }}</p>
+    <ul>
+        {% for file in uploaded_files %}
+        <li>{{ file }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+</div>
+{% endblock %}

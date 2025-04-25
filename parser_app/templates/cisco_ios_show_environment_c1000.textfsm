@@ -1,0 +1,26 @@
+Value Required Switch (\d+)
+Value Required System_Temperature_Status (\S+)
+Value Required System_Temperature (\d+)
+Value Required PHY_Temperature (\d+)
+Value Required DDR_Temperature (\d+)
+Value Required System_Temperature_State (\S+)
+Value Required PID ([-\w]+)
+Value Required System_Power (\d+)
+Value Required Max_Power_Usage (\d+)
+Value Required Maximum_Heat_Dissipation (\d+)
+Value Required PoE_Power_Extract ([\d\.]+)
+Value Required Power_Supply_Status (\S+)
+
+Start
+  ^SWITCH:\s+${Switch} -> Continue
+  ^SYSTEM TEMPERATURE is\s+${System_Temperature_Status} -> Continue
+  ^System Temperature Value:\s+${System_Temperature} -> Continue
+  ^PHY Temperature Value:\s+${PHY_Temperature} -> Continue
+  ^DDR Temperature Value:\s+${DDR_Temperature} -> Continue
+  ^System Temperature State:\s+${System_Temperature_State} -> Continue
+  ^PID:\s+${PID} -> Continue
+  ^System Power:\(Watts\)\s+${System_Power} -> Continue
+  ^Max Power Usage:\(Watts\)\s+${Max_Power_Usage} -> Continue
+  ^Maximum Heat Dissipation:\s+\(Watts\)\s+${Maximum_Heat_Dissipation} -> Continue
+  ^PoE Power extract:\(Watts\)\s+${PoE_Power_Extract} -> Continue
+  ^Power Supply Status:\s+${Power_Supply_Status} -> Record

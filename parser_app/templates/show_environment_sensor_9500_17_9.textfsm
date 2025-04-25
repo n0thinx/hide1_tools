@@ -1,0 +1,12 @@
+Value Sensor_Name (\S+.*?)
+Value Location (\S+)
+Value State (\S+)
+Value Reading (\d+)
+Value Unit (\w+)
+
+Start
+  ^\s*Sensor\s+List:\s+Environmental\s+Monitoring -> Sensors
+
+Sensors
+  ^\s*(?P<Sensor_Name>[\w\-_:\d]+):\s+VOUT\s+(?P<Location>\S+)\s+(?P<State>\S+)\s+(?P<Reading>\d+)\s+(?P<Unit>mV) -> Record
+  ^\s*(?P<Sensor_Name>Temp:[\w\-_]+)\s+(?P<Location>\S+)\s+(?P<State>\S+)\s+(?P<Reading>\d+)\s+(?P<Unit>Celsius) -> Record

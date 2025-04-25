@@ -1,0 +1,12 @@
+Value Switch (\d+)
+Value Supply (\S+)
+Value Model (\S+)
+Value Type (\S+)
+Value Capacity (\d+)
+Value Status (\S+)
+Value Fan_0 (\S+)
+Value Fan_1 (\S+)
+
+Start
+  ^Switch:\s*(?P<Switch>\d+) -> Continue
+  ^(?P<Supply>PS\d+)\s+(?P<Model>\S+)\s+(?P<Type>\S+)\s+(?P<Capacity>\d+)\s+W\s+(?P<Status>\S+)\s+(?P<Fan_0>\S+)\s+(?P<Fan_1>\S+) -> Record

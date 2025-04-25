@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="row">
+    <div class="col-12">
+        <div id="hero" role="banner">
+            <h1 class="h1">HINCD Tools</h1>
+            <blockquote class="lead blockquote blockquote--primary">
+                Internal tools for Check End Of Support, Software Suggestions, Serial Number information, and many more ( coming soon )
+            </blockquote>
+        </div>
+    </div>
+</div>
+
+<div class="grid grid--col-md-3 grid--spacing-half" style="grid-template-rows:none;">
+    <div class="flex flex-column text-white bg-tertiary base-padding" id="panel">
+        <h4 class="h4 text-center">End Of Support</h4>
+        <p class="half-padding-top half-padding-bottom" style="margin-top:auto;margin-bottom:auto;">
+            Get End Of Support dates and replacement PID based on Serial Number or PID
+        </p>
+        <div class="text-center" style="margin-top:auto;">
+            <a href="{% url 'get_eox' %}" class="btn btn--secondary btn--justified text-white" title="{{ title }}">
+                Form <span class="icon-small icon-search"></span>
+            </a>
+        </div>
+    </div>
+    <div class="flex flex-column text-white bg-tertiary base-padding" id="panel">
+        <h4 class="h4 text-center">Software Suggestions</h4>
+        <p class="half-padding-top half-padding-bottom" style="margin-top:auto;margin-bottom:auto;">
+            Get Software Suggestions ( and not suggested ) based on PID
+        </p>
+        <div class="text-center" style="margin-top:auto;">
+            <a href="{% url 'get_ss' %}" class="btn btn--secondary btn--justified text-white" title="{{ title }}">
+                Form <span class="icon-small icon-search"></span>
+            </a>
+        </div>
+    </div>
+    <div class="flex flex-column text-white bg-tertiary base-padding" id="panel">
+        <h4 class="h4 text-center">Serial Number Information</h4>
+        <p class="half-padding-top half-padding-bottom" style="margin-top:auto;margin-bottom:auto;">
+            Get Serial Number Information
+        </p>
+        <div class="text-center" style="margin-top:auto;">
+            <a href="{% url 'get_sni' %}" class="btn btn--secondary btn--justified text-white" title="{{ title }}">
+                Form <span class="icon-small icon-search"></span>
+            </a>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

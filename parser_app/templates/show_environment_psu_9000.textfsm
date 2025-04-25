@@ -1,0 +1,10 @@
+Value Switch (\d+[AB])
+Value PID (\S+)
+Value Serial (\S+)
+Value Status ([\w\s]+)
+Value SysPwr (\S+)
+Value PoEPwr (\S+)
+Value Watts (\S+)
+
+Start
+  ^(?P<Switch>[1-7][AB])\s+(?P<PID>\S+)\s+(?P<Serial>\S+)\s+(?P<Status>[\w\s]+?)\s+(?P<SysPwr>\S+)\s+(?P<PoEPwr>\S+)\s+(?P<Watts>\S+) -> Record
