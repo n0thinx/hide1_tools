@@ -1,0 +1,131 @@
+{% extends 'base.html' %}
+{% block content %}
+{% load widget_tweaks %}
+<div class="row">
+    <div class="col-lg-12 mx-auto">
+        <div class="card shadow-soft border-radius-lg mb-4">
+            <div class="card-header pb-0">
+                <a class="h3 d-block mt-3 text-decoration-none text-dark">Get Software Suggestions Data</a>
+            </div>
+            <div class="card-body form-group">
+                <form method="post" action="{% url 'get_ss' %}">
+                    {% csrf_token %}
+                    <div class="mb-3">
+                        <label for="id_product_id" class="form-label">Product ID</label>
+                        <input type="text" name="product_id" class="form-control border border-light px-3"
+                            id="id_product_id" placeholder="Enter Product ID" maxlength="100">
+                    </div>
+                    <div class="text-center">
+                        <button type="submit" class="btn btn-danger" id="submit" name="submit">
+                            <span class="ni ni-send"></span> Submit
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        {% if ss_data %}
+        <div class="card shadow border-radius-lg mt-4">
+            <div class="card-body">
+                <div class="mt-4">
+                    {% if error_message_apikey %}
+                    <div class="alert alert-danger text-white" role="alert">
+                        <strong>API Key Error:</strong> {{ error_message_apikey }}
+                    </div>
+                    {% elif error_message_ss_data %}
+                    <div class="alert alert-danger text-white" role="alert">
+                        <strong>Data Retrieval Error:</strong> {{ error_message_ss_data }}
+                    </div>
+                    {% elif ss_data %}
+                    <a class="h4 d-block mt-3 text-decoration-none text-danger mt-3 mb-0">Software Suggestions Data</a>
+
+                    <div class="mb-3">
+                        <label class="form-label" for="filterSelect">Filter by Suggested or Not:</label>
+                        <select id="filterSelect" class="form-select" onchange="filterTable()">
+                            <option value="">All</option>
+                            <option value="Y">Suggested</option>
+                            <option value="N">Not Suggested</option>
+                        </select>
+                    </div>
+
+                    <div class="table-responsive">
+                        <table class="table align-items-center mb-0" id="myTable">
+                            <thead class="bg-light">
+                                <tr>
+                                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder">
+                                        Suggested</th>
+                                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder">
+                                        Suggested ID
+                                    </th>
+                                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder">Base
+                                        PID</th>
+                                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder">
+                                        Software Type
+                                    </th>
+                                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder">
+                                        Release Format
+                                    </th>
+                                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder">
+                                        Release Date
+                                    </th>
+                                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder">Image
+                                        Name
+                                    </th>
+                                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder">
+                                        Description
+                                    </th>
+                                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder">Image
+                                        Size
+                                    </th>
+                                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder">
+                                        Download Link
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for suggestion in ss_data.suggestions %}
+                                {% for image in suggestion.images %}
+                                <tr>
+                                    <td>{{ suggestion.isSuggested }}</td>
+                                    <td>{{ suggestion.id }}</td>
+                                    <td>{{ suggestion.basePID }}</td>
+                                    <td>{{ suggestion.softwareType }}</td>
+                                    <td>{{ suggestion.releaseFormat1 }}</td>
+                                    <td>{{ suggestion.releaseDate }}</td>
+                                    <td>{{ image.imageName }}</td>
+                                    <td>{{ image.description }}</td>
+                                    {% load custom_filters %}
+                                    <td>{{ image.imageSize|format_size }}</td>
+                                    <td>
+                                        <a href="https://software.cisco.com/download/home/{{ suggestion.mdfId }}"
+                                            target="_blank" class="text-danger font-weight-bold">Here</a>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                    <script>
+                        function filterTable() {
+                            var select = document.getElementById("filterSelect");
+                            var filter = select.value.toUpperCase();
+                            var table = document.getElementById("myTable");
+                            var tr = table.getElementsByTagName("tr");
+
+                            for (var i = 1; i < tr.length; i++) {
+                                var td = tr[i].getElementsByTagName("td")[0];
+                                if (td) {
+                                    var txtValue = td.textContent || td.innerText;
+                                    tr[i].style.display = (filter === "" || txtValue.toUpperCase() === filter) ? "" : "none";
+                                }
+                            }
+                        }
+                    </script>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

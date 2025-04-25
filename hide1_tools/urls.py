@@ -16,6 +16,7 @@ urlpatterns = [
     path('topology-drawer/', include('topology_drawer.urls')),
     path('tools-cisco/end-of-support/', include('cisco_endofsupport.urls')),
     path('tools-cisco/serial-number-information/', include('cisco_serialnumberinformation.urls')),
+    path('tools-cisco/software-suggestions/', include('cisco_softwaresuggestions.urls')),
     path('register/', views.register_user, name='register'),
     path('login/', views.user_login, name='login'),
     path('logout/', views.user_logout, name='logout'),

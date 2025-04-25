@@ -90,6 +90,14 @@
                         <span class="nav-link-text ms-1">Serial Number Information</span>
                     </a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link {% if request.path == '/tools-cisco/software-suggestions/' %}active{% endif %}" href="/tools-cisco/software-suggestions/">
+                        <div
+                            class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
+                        </div>
+                        <span class="nav-link-text ms-1">Software Suggestions</span>
+                    </a>
+                </li>
                 {% if request.user.is_superuser %}
                 <li class="nav-item">
                     <a class="nav-link {% if request.path == '/activity-log/' %}active{% endif %}" href="/activity-log/">
