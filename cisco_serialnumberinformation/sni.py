@@ -5,8 +5,6 @@ import os
 from dotenv import load_dotenv
 load_dotenv()
 
-file_name = 'OS Suggest.csv'
-
 #  disable certificate warning
 urllib3.disable_warnings()
 

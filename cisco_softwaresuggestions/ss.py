@@ -1,8 +1,9 @@
 import requests
 import urllib3
 import json
-
-file_name = 'OS Suggest.csv'
+import os
+from dotenv import load_dotenv
+load_dotenv()
 
 #  disable certificate warning
 urllib3.disable_warnings()
@@ -12,8 +13,8 @@ urllib3.disable_warnings()
 # change your client id and client secret
 URL_API_KEY = "https://id.cisco.com/oauth2/default/v1/token"
 URL_EOX_API = "https://apix.cisco.com/software/suggestion/v2/suggestions/compatible/productId/<product-id>"
-YOUR_CLIENT_ID = "r8jep7h2mz5nwqet4yakftvg"
-YOUR_CLIENT_SECRET = "sGa4cA72YaUZX2qMvRHBkZcs"
+YOUR_CLIENT_ID = os.getenv("CLIENT_ID", default="")
+YOUR_CLIENT_SECRET = os.getenv("CLIENT_SECRET", default="")
 
 
 def _parse_apikey(json_data):
